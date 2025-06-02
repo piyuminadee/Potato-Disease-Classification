@@ -7,7 +7,7 @@
 ...
 *Demonstration of real-time potato disease classification with 98.5% accuracy*
 
-This project implements a CNN-based solution for detecting potato diseases (Early Blight, Late Blight) with 96% accuracy. Developed as a practical implementation of my research on "Applying Machine Learning to Agriculture in Sri Lanka: Challenges and Outcomes", it addresses critical challenges in smallholder farming by providing real-time disease diagnostics.
+This project implements a CNN-based solution for detecting potato diseases (Early Blight, Late Blight) with 98.5% accuracy. Developed as a practical implementation of my research on "Applying Machine Learning to Agriculture in Sri Lanka: Challenges and Outcomes", it addresses critical challenges in smallholder farming by providing real-time disease diagnostics.
 
 
 ## 🚀 Key Features
