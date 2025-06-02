@@ -6,8 +6,10 @@ from PIL import Image
 from io import BytesIO
 import tensorflow as tf
 from pathlib import Path
+import requests
 
 app = FastAPI()
+
 
 origins = [
     "http://localhost",
@@ -21,7 +23,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-endpoint = "http://localhost:8501/v1/models/potatoes_model:predict"
+endpoint = "http://localhost:8606/v1/models/potato_model:predict"
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # Load your saved model
@@ -54,9 +56,17 @@ def preprocess_image(data: bytes) -> np.ndarray:
 async def predict(file: UploadFile = File(...)):
   image = preprocess_image(await file.read())
   img_batch = np.expand_dims(image, axis=0)
-  predictions = MODEL.predict(img_batch)
-  predicted_class = CLASS_NAMES[np.argmax(predictions[0])]
-  confidence = np.max(predictions[0])
+  
+  json_data = {
+         "instances": img_batch.tolist()
+  }
+  response = requests.post(endpoint, json=json_data)
+  
+  prediction = np.array(response.json()["predictions"][0])
+  
+  predicted_class = CLASS_NAMES[np.argmax(prediction)]
+  confidence = np.max(prediction)
+  
   return {
       'class':predicted_class,
       'confidence': float(confidence)
